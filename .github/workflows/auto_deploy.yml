@@ -1,0 +1,86 @@
+name: Auto Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy (SSH + Docker Compose)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+
+          # 🔥 Critical fixes
+          timeout: 0                 # disable SSH timeout
+          command_timeout: 30m       # allow long builds
+          script_stop: true
+          envs: DEPLOY_PATH
+          script: |
+            set -euo pipefail
+
+            echo "🚀 Starting deployment..."
+
+            if [ -z "${DEPLOY_PATH:-}" ]; then
+              echo "❌ DEPLOY_PATH is empty." >&2
+              exit 1
+            fi
+
+            if [ ! -d "$DEPLOY_PATH/.git" ]; then
+              echo "❌ Invalid repo path: $DEPLOY_PATH" >&2
+              exit 1
+            fi
+
+            while true; do 
+              echo "⏳ Deployment in progress..."; 
+              sleep 20; 
+            done &
+            KEEP_ALIVE_PID=$!
+
+            cd "$DEPLOY_PATH"
+
+            echo "📥 Pulling latest code..."
+            git fetch --all --prune --progress
+            git reset --hard origin/main
+
+            echo "🐳 Detecting Docker Compose..."
+
+            if docker compose version >/dev/null 2>&1; then
+              DC="docker compose"
+            elif docker-compose version >/dev/null 2>&1; then
+              DC="docker-compose"
+            else
+              echo "❌ Docker Compose not found!" >&2
+              exit 1
+            fi
+
+            echo "📦 Pulling latest images..."
+            $DC pull || true
+
+            echo "🛑 Stopping old containers..."
+            $DC down
+
+            echo "🏗️ Starting containers..."
+            $DC up -d --build --remove-orphans
+
+            echo "🧹 Cleaning unused images..."
+            docker image prune -f
+
+            echo "✅ Deployment completed successfully!"
+
+            kill $KEEP_ALIVE_PID || true
