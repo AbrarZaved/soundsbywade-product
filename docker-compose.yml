@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    image: soundsbywade-product:latest
+    container_name: soundsbywade-product
+    ports:
+      - "3050:80"
+    restart: unless-stopped
