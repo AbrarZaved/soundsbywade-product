@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import ianPhoto from "../../assets/ian-macintyre.png";
 
 export function AboutPage() {
   useEffect(() => {
@@ -25,23 +26,16 @@ export function AboutPage() {
               Orbital Fitness was born from a shared vision: to revolutionize how fitness studios operate by bringing every essential tool into one seamless ecosystem.
             </p>
 
-            {/* Founders Grid */}
-            <div className="grid md:grid-cols-2 gap-12 mb-20">
-              {/* Founder 1 */}
-              <FounderCard
-                name="Ian Mitchell"
-                role="Co-Founder & Chief Technology Officer"
-                image="https://images.unsplash.com/photo-1530281834572-02d15fa61f64?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMHBvcnRyYWl0JTIwbWFsZXxlbnwxfHx8fDE3NzE1MDMxMzR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                bio="With over a decade of experience in software engineering and a passion for fitness, Ian recognized the fragmentation plaguing gym management systems. His expertise in building scalable platforms led to the creation of Orbital Fitness's robust, all-in-one infrastructure. When he's not coding, you'll find Ian at the gym or exploring new technologies that push the boundaries of what's possible."
-              />
-
-              {/* Founder 2 */}
-              <FounderCard
-                name="Andrew Chen"
-                role="Co-Founder & Chief Executive Officer"
-                image="https://images.unsplash.com/photo-1629507313712-f21468afdf2e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMHBvcnRyYWl0JTIwZmVtYWxlfGVufDF8fHx8MTc3MTUzMDA2N3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                bio="Andrew brings a unique blend of business acumen and hands-on fitness industry experience. As a former gym owner, they intimately understand the pain points that Orbital Fitness solves. Andrew's vision is to empower studio owners with tools that don't just manage operations—they accelerate growth. Their leadership ensures that every feature we build serves real business needs."
-              />
+            {/* Founder */}
+            <div className="flex justify-center mb-20">
+              <div className="w-full max-w-md">
+                <FounderCard
+                  name="Ian Quinn Macintyre"
+                  role="Co-Founder & Head Technical Director"
+                  image={ianPhoto}
+                  bio="Ian is a lifelong gym-goer and current student at UT Austin. Driven by his passion for exercise, he conceptualized Orbital Fitness with a goal of helping gym owners across the world. After teaming up with Andrew Best, through months of rigorous research and development the two created a true first-of-its-kind OS for gym owners."
+                />
+              </div>
             </div>
 
             {/* Mission Statement */}
@@ -235,9 +229,8 @@ function TestimonialSlider() {
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`h-2 rounded-full transition-all ${
-                  index === currentIndex ? "w-8 bg-[#6CFFF3]" : "w-2 bg-white/30"
-                }`}
+                className={`h-2 rounded-full transition-all ${index === currentIndex ? "w-8 bg-[#6CFFF3]" : "w-2 bg-white/30"
+                  }`}
               />
             ))}
           </div>
