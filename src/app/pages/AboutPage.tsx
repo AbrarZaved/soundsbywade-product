@@ -103,7 +103,7 @@ function FounderCard({
           <ImageWithFallback
             src={image}
             alt={name}
-            className="relative w-full aspect-square object-cover rounded-2xl border-2 border-white/20"
+            className="relative w-full aspect-square object-cover object-[center_30%] rounded-2xl border-2 border-white/20"
           />
         </div>
 
