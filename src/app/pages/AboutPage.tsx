@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import ianPhoto from "../../assets/ian-macintyre.png";
+import andrewPhoto from "../../assets/andrew-best.png";
 
 export function AboutPage() {
   useEffect(() => {
@@ -26,16 +27,20 @@ export function AboutPage() {
               Orbital Fitness was born from a shared vision: to revolutionize how fitness studios operate by bringing every essential tool into one seamless ecosystem.
             </p>
 
-            {/* Founder */}
-            <div className="flex justify-center mb-20">
-              <div className="w-full max-w-md">
-                <FounderCard
-                  name="Ian Quinn Macintyre"
-                  role="Co-Founder & Head Technical Director"
-                  image={ianPhoto}
-                  bio="Ian is a lifelong gym-goer and current student at UT Austin. Driven by his passion for exercise, he conceptualized Orbital Fitness with a goal of helping gym owners across the world. After teaming up with Andrew Best, through months of rigorous research and development the two created a true first-of-its-kind OS for gym owners."
-                />
-              </div>
+            {/* Founders Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+              <FounderCard
+                name="Ian Quinn Macintyre"
+                role="Co-Founder & Head Technical Director"
+                image={ianPhoto}
+                bio="Ian is a lifelong gym-goer and current student at UT Austin. Driven by his passion for exercise, he conceptualized Orbital Fitness with a goal of helping gym owners across the world. After teaming up with Andrew Best, through months of rigorous research and development the two created a true first-of-its-kind OS for gym owners."
+              />
+              <FounderCard
+                name="Andrew Best"
+                role="Co-Founder & Head of Business Development"
+                image={andrewPhoto}
+                bio="Andrew brings a unique blend of business acumen and entrepreneurial drive. He is the founder and owner of Best in Biz Detailing and Poolr, giving him hands-on experience in the business world while also being a student at The University of Texas at Austin. With Orbital, Andrew is now focused on serving gyms and fitness studios by building a product that truly supports their needs. His goal is simple: give gym owners the tools, support, and technology they need to operate more efficiently, and allow their businesses to succeed and flourish at the highest level."
+              />
             </div>
 
             {/* Mission Statement */}
@@ -81,11 +86,13 @@ function FounderCard({
   name,
   role,
   image,
+  initials,
   bio,
 }: {
   name: string;
   role: string;
-  image: string;
+  image?: string;
+  initials?: string;
   bio: string;
 }) {
   return (
@@ -100,11 +107,19 @@ function FounderCard({
         {/* Photo */}
         <div className="relative mb-6">
           <div className="absolute -inset-2 bg-gradient-to-r from-[#9D4DFF] to-[#6CFFF3] rounded-2xl blur-xl opacity-50" />
-          <ImageWithFallback
-            src={image}
-            alt={name}
-            className="relative w-full aspect-square object-cover object-[center_30%] rounded-2xl border-2 border-white/20"
-          />
+          {image ? (
+            <ImageWithFallback
+              src={image}
+              alt={name}
+              className="relative w-full aspect-square object-cover object-[center_30%] rounded-2xl border-2 border-white/20"
+            />
+          ) : (
+            <div className="relative w-full aspect-square rounded-2xl border-2 border-white/20 bg-gradient-to-br from-[#9D4DFF]/40 to-[#6CFFF3]/40 flex items-center justify-center">
+              <span className="text-6xl font-bold text-white/80 select-none">
+                {initials ?? name.split(" ").map((n) => n[0]).join("")}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Info */}

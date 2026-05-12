@@ -9,3 +9,10 @@ services:
     ports:
       - "3050:80"
     restart: unless-stopped
+    networks:
+      - default
+      - soundsbywade_default
+
+networks:
+  soundsbywade_default:
+    external: true

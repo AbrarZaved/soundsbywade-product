@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { Link } from "react-router";
 import { Twitter, Facebook, Instagram, Linkedin } from "lucide-react";
 
 export function Footer() {
@@ -13,11 +14,11 @@ export function Footer() {
     <footer className="relative mt-32 border-t border-white/10">
       {/* Cosmic Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#9D4DFF]/5 to-[#0A0A0F]" />
-      
+
       <div className="relative max-w-7xl mx-auto px-6 py-16">
         {/* Glowing Line Separator */}
         <div className="h-px bg-gradient-to-r from-transparent via-[#6CFFF3]/50 to-transparent mb-12" />
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* Brand Section */}
           <div>
@@ -34,14 +35,14 @@ export function Footer() {
             <h4 className="text-white font-semibold mb-4">Legal</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-white/60 hover:text-[#6CFFF3] transition-colors text-sm">
+                <Link to="/privacy-policy" className="text-white/60 hover:text-[#6CFFF3] transition-colors text-sm">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-white/60 hover:text-[#6CFFF3] transition-colors text-sm">
+                <Link to="/terms" className="text-white/60 hover:text-[#6CFFF3] transition-colors text-sm">
                   Terms of Service
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
