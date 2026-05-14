@@ -13,6 +13,14 @@ import {
 } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
+const crm1 = new URL("../../assets/crm_1.png", import.meta.url).href;
+const crm2 = new URL("../../assets/crm_2.png", import.meta.url).href;
+const classPlanner = new URL("../../assets/class_planner.png", import.meta.url).href;
+const trainerAvailability = new URL("../../assets/trainer_availability.png", import.meta.url).href;
+const staff = new URL("../../assets/staff.png", import.meta.url).href;
+const workoutBuilder = new URL("../../assets/workout_builder.png", import.meta.url).href;
+const templates = new URL("../../assets/templates.png", import.meta.url).href;
+
 export function OverviewPage() {
   const orbitWrapperRef = useRef<HTMLDivElement>(null);
   const [orbitSize, setOrbitSize] = useState(300);
@@ -232,12 +240,12 @@ export function OverviewPage() {
             slides={[
               {
                 type: "Admin Interface",
-                image: "/assets/crm_1.png",
+                image: crm1,
                 caption: "Comprehensive client profiles with full history tracking",
               },
               {
                 type: "Client Interface",
-                image: "/assets/crm_2.png",
+                image: crm2,
                 caption: "Clean, mobile-friendly member portal",
               },
             ]}
@@ -249,17 +257,17 @@ export function OverviewPage() {
             slides={[
               {
                 type: "Class Planner",
-                image: "/assets/class_planner.png",
+                image: classPlanner,
                 caption: "Drag-and-drop calendar with conflict detection",
               },
               {
                 type: "Trainer Availability",
-                image: "/assets/trainer_availability.png",
+                image: trainerAvailability,
                 caption: "Book sessions instantly from any device",
               },
               {
                 type: "Staff Shifts",
-                image: "/assets/staff.png",
+                image: staff,
                 caption: "Book sessions instantly from any device",
               },
             ]}
@@ -271,12 +279,12 @@ export function OverviewPage() {
             slides={[
               {
                 type: "Admin Interface",
-                image: "/assets/workout_builder.png",
+                image: workoutBuilder,
                 caption: "Visual workout builder with exercise library",
               },
               {
                 type: "Templates",
-                image: "/assets/templates.png",
+                image: templates,
                 caption: "Track your progress with visual charts and milestones",
               },
             ]}
