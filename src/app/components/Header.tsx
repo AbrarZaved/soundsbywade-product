@@ -60,7 +60,10 @@ export function Header() {
         </nav>
 
         {/* Desktop Login Button */}
-        <motion.button
+        <motion.a
+          href="https://dashboard.orbitalfitness.us/"
+          target="_blank"
+          rel="noopener noreferrer"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="relative group hidden md:block"
@@ -69,7 +72,7 @@ export function Header() {
           <div className="relative px-6 py-2.5 bg-[#0A0A0F] rounded-full border border-[#9D4DFF]/50 text-white text-sm font-medium">
             Current Users Login
           </div>
-        </motion.button>
+        </motion.a>
 
         {/* Mobile Menu Button */}
         <button
@@ -94,16 +97,20 @@ export function Header() {
                 key={link.path}
                 to={link.path}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`text-white/80 hover:text-white transition-colors py-2 ${
-                  location.pathname === link.path ? "text-[#6CFFF3]" : ""
-                }`}
+                className={`text-white/80 hover:text-white transition-colors py-2 ${location.pathname === link.path ? "text-[#6CFFF3]" : ""
+                  }`}
               >
                 {link.name}
               </Link>
             ))}
-            <button className="w-full mt-4 px-6 py-3 bg-gradient-to-r from-[#9D4DFF] to-[#6CFFF3] rounded-full text-white font-medium">
+            <a
+              href="https://dashboard.orbitalfitness.us/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full mt-4 px-6 py-3 bg-gradient-to-r from-[#9D4DFF] to-[#6CFFF3] rounded-full text-white font-medium text-center"
+            >
               Current Users Login
-            </button>
+            </a>
           </nav>
         </motion.div>
       )}

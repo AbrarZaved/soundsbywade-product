@@ -33,21 +33,21 @@ export function OverviewPage() {
   }, []);
 
   // Ring = 75% of wrapper → bubbles overflow into the remaining 25% (12.5% each side)
-  const RING_RATIO  = 0.75;
-  const ringSize    = orbitSize * RING_RATIO;
-  const radius      = ringSize / 2;
-  const bubbleSize  = Math.max(52,  ringSize * 0.21);
-  const iconSize    = Math.max(14,  ringSize * 0.072);
-  const fontSize    = Math.max(7,   ringSize * 0.025);
-  const hubSize     = Math.max(100, ringSize * 0.37);
+  const RING_RATIO = 0.75;
+  const ringSize = orbitSize * RING_RATIO;
+  const radius = ringSize / 2;
+  const bubbleSize = Math.max(52, ringSize * 0.21);
+  const iconSize = Math.max(14, ringSize * 0.072);
+  const fontSize = Math.max(7, ringSize * 0.025);
+  const hubSize = Math.max(100, ringSize * 0.37);
 
   const features = [
-    { icon: CreditCard,   label: "Payment Processing", angle: 0,   color: "#9D4DFF" },
-    { icon: ShoppingCart, label: "Merchandise Sales",   angle: 60,  color: "#6CFFF3" },
-    { icon: UserCheck,    label: "Client Check-in",     angle: 120, color: "#3C22FF" },
-    { icon: Calendar,     label: "Trainer Scheduling",  angle: 180, color: "#9D4DFF" },
-    { icon: Dumbbell,     label: "Workout Building",    angle: 240, color: "#6CFFF3" },
-    { icon: Users,        label: "Class Planning",      angle: 300, color: "#3C22FF" },
+    { icon: CreditCard, label: "Payment Processing", angle: 0, color: "#9D4DFF" },
+    { icon: ShoppingCart, label: "Merchandise Sales", angle: 60, color: "#6CFFF3" },
+    { icon: UserCheck, label: "Client Check-in", angle: 120, color: "#3C22FF" },
+    { icon: Calendar, label: "Trainer Scheduling", angle: 180, color: "#9D4DFF" },
+    { icon: Dumbbell, label: "Workout Building", angle: 240, color: "#6CFFF3" },
+    { icon: Users, label: "Class Planning", angle: 300, color: "#3C22FF" },
   ];
 
   return (
@@ -93,7 +93,7 @@ export function OverviewPage() {
                           className="absolute z-20"
                           style={{
                             left: "50%",
-                            top:  "50%",
+                            top: "50%",
                             transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
                           }}
                         >
@@ -115,19 +115,19 @@ export function OverviewPage() {
                               <div
                                 className="relative rounded-full backdrop-blur-xl bg-white/10 border-2 border-white/20 flex flex-col items-center justify-center shadow-lg"
                                 style={{
-                                  width:     bubbleSize,
-                                  height:    bubbleSize,
+                                  width: bubbleSize,
+                                  height: bubbleSize,
                                   boxShadow: `0 0 20px ${feature.color}40`,
-                                  padding:   Math.max(4, bubbleSize * 0.12),
+                                  padding: Math.max(4, bubbleSize * 0.12),
                                 }}
                               >
                                 <feature.icon
                                   style={{
-                                    color:        feature.color,
-                                    width:        iconSize,
-                                    height:       iconSize,
+                                    color: feature.color,
+                                    width: iconSize,
+                                    height: iconSize,
                                     marginBottom: 2,
-                                    flexShrink:   0,
+                                    flexShrink: 0,
                                   }}
                                 />
                                 <span
@@ -232,12 +232,12 @@ export function OverviewPage() {
             slides={[
               {
                 type: "Admin Interface",
-                image: "https://images.unsplash.com/photo-1759752394755-1241472b589d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaWdpdGFsJTIwZGFzaGJvYXJkJTIwYW5hbHl0aWNzJTIwc2NyZWVufGVufDF8fHx8MTc3MTQxMTc4NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+                image: "/assets/crm_1.png",
                 caption: "Comprehensive client profiles with full history tracking",
               },
               {
                 type: "Client Interface",
-                image: "https://images.unsplash.com/photo-1591311630200-ffa9120a540f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwYXBwJTIwaW50ZXJmYWNlJTIwbW9iaWxlJTIwd29ya291dHxlbnwxfHx8fDE3NzE1MzAwNjF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+                image: "/assets/crm_2.png",
                 caption: "Clean, mobile-friendly member portal",
               },
             ]}
@@ -248,13 +248,18 @@ export function OverviewPage() {
             description="Effortlessly coordinate trainer availability, client appointments, and class sessions. Automated reminders keep everyone on track while reducing no-shows."
             slides={[
               {
-                type: "Admin Interface",
-                image: "https://images.unsplash.com/photo-1769596722257-282ec3fe8594?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYWxlbmRhciUyMHNjaGVkdWxpbmclMjBhcHAlMjBpbnRlcmZhY2V8ZW58MXx8fHwxNzcxNTMwMDYzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+                type: "Class Planner",
+                image: "/assets/class_planner.png",
                 caption: "Drag-and-drop calendar with conflict detection",
               },
               {
-                type: "Client Interface",
-                image: "https://images.unsplash.com/photo-1750698545009-679820502908?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwdHJhaW5lciUyMGNvYWNoaW5nJTIwY2xpZW50fGVufDF8fHx8MTc3MTQ0MjQ2OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+                type: "Trainer Availability",
+                image: "/assets/trainer_availability.png",
+                caption: "Book sessions instantly from any device",
+              },
+              {
+                type: "Staff Shifts",
+                image: "/assets/staff.png",
                 caption: "Book sessions instantly from any device",
               },
             ]}
@@ -266,12 +271,12 @@ export function OverviewPage() {
             slides={[
               {
                 type: "Admin Interface",
-                image: "https://images.unsplash.com/photo-1710746904729-f3ad9f682bb9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxneW0lMjBlcXVpcG1lbnQlMjBtb2Rlcm4lMjB3ZWlnaHRzfGVufDF8fHx8MTc3MTUzMDA2MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+                image: "/assets/workout_builder.png",
                 caption: "Visual workout builder with exercise library",
               },
               {
-                type: "Client Interface",
-                image: "https://images.unsplash.com/photo-1591311630200-ffa9120a540f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b3Jrb3V0JTIwdHJhY2tpbmclMjBwcm9ncmVzcyUyMGNoYXJ0fGVufDF8fHx8MTc3MTUzMDA2M3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+                type: "Templates",
+                image: "/assets/templates.png",
                 caption: "Track your progress with visual charts and milestones",
               },
             ]}
@@ -341,9 +346,8 @@ function FeatureSlider({
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
-                  className={`h-1 rounded-full transition-all ${
-                    index === currentSlide ? "w-12 bg-[#6CFFF3]" : "w-8 bg-white/30"
-                  }`}
+                  className={`h-1 rounded-full transition-all ${index === currentSlide ? "w-12 bg-[#6CFFF3]" : "w-8 bg-white/30"
+                    }`}
                 />
               ))}
             </div>

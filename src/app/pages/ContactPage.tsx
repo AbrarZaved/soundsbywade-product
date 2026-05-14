@@ -254,10 +254,13 @@ export function ContactPage() {
                         <Phone className="w-6 h-6 text-[#6CFFF3]" />
                       </div>
                       <div>
-                        <p className="text-white font-semibold">Ian Mitchell</p>
-                        <p className="text-white/70 text-sm mb-1">Co-Founder & CTO</p>
-                        <a href="tel:+15551234567" className="text-[#6CFFF3] hover:text-[#9D4DFF] transition">
-                          (555) 123-4567
+                        <p className="text-white font-semibold">Quinn</p>
+                        <p className="text-white/70 text-sm mb-1">Co-Founder</p>
+                        <a href="mailto:quinnmacintyre@orbitalfitness.us" className="text-[#6CFFF3] hover:text-[#9D4DFF] transition">
+                          quinnmacintyre@orbitalfitness.us
+                        </a>
+                        <a href="tel:+12026696327" className="text-[#6CFFF3] hover:text-[#9D4DFF] transition">
+                          +1 202 669 6327
                         </a>
                       </div>
                     </div>
@@ -268,10 +271,13 @@ export function ContactPage() {
                         <Phone className="w-6 h-6 text-[#6CFFF3]" />
                       </div>
                       <div>
-                        <p className="text-white font-semibold">Andrew Chen</p>
-                        <p className="text-white/70 text-sm mb-1">Co-Founder & CEO</p>
-                        <a href="tel:+15559876543" className="text-[#6CFFF3] hover:text-[#9D4DFF] transition">
-                          (555) 987-6543
+                        <p className="text-white font-semibold">Andrew</p>
+                        <p className="text-white/70 text-sm mb-1">Co-Founder</p>
+                        <a href="mailto:legal@orbitalfitness.us" className="text-[#6CFFF3] hover:text-[#9D4DFF] transition">
+                          legal@orbitalfitness.us
+                        </a>
+                        <a href="tel:+12024410950" className="text-[#6CFFF3] hover:text-[#9D4DFF] transition">
+                          +1 202 441 0950
                         </a>
                       </div>
                     </div>
