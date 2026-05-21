@@ -11,7 +11,7 @@ export function Header() {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Orbital Fitness Overview", path: "/overview" },
-    { name: "About & Testimonials", path: "/about" },
+    { name: "About", path: "/about" },
     { name: "Free Demo & Contact", path: "/contact" },
   ];
 
