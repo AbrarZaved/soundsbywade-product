@@ -259,19 +259,19 @@ export function HomePage() {
                                             <div className="text-center px-2">
                                                 <h2
                                                     className="font-bold bg-gradient-to-r from-white to-[#9D4DFF] bg-clip-text text-transparent mb-1"
-                                                    style={{ fontSize: Math.max(12, hubSize * 0.19) }}
+                                                    style={{ fontSize: Math.max(9, hubSize * 0.16) }}
                                                 >
                                                     ORBITAL
                                                 </h2>
                                                 <p
                                                     className="font-bold text-white"
-                                                    style={{ fontSize: Math.max(11, hubSize * 0.165) }}
+                                                    style={{ fontSize: Math.max(9, hubSize * 0.14) }}
                                                 >
                                                     FITNESS
                                                 </p>
                                                 <p
                                                     className="text-white/60 mt-1"
-                                                    style={{ fontSize: Math.max(7, hubSize * 0.075) }}
+                                                    style={{ fontSize: Math.max(6, hubSize * 0.06) }}
                                                 >
                                                     All-In-One Platform
                                                 </p>
