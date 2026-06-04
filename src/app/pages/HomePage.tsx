@@ -448,18 +448,27 @@ export function HomePage() {
                                     transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                                     className="relative h-80 flex items-center justify-center"
                                 >
+                                    {/* Glow stays behind */}
                                     <div className="absolute w-64 h-64 rounded-full bg-gradient-to-r from-[#9D4DFF]/30 to-[#6CFFF3]/30 blur-3xl" />
-                                    <motion.div
-                                        animate={{ rotate: 360 }}
-                                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                                        className="relative w-72 h-72 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl"
-                                    >
-                                        <ImageWithFallback
-                                            src={logo}
-                                            alt="Orbital Fitness logo"
-                                            className="w-full h-full object-contain p-8"
-                                        />
-                                    </motion.div>
+
+                                    {/* Static ring: clips to circle, holds the border — does NOT transform */}
+                                    <div className="relative w-72 h-72 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl">
+
+                                        {/* Only the image rotates — no overflow-hidden here */}
+                                        <motion.div
+                                            animate={{ rotate: 360 }}
+                                            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                                            className="w-full h-full"
+                                            style={{ willChange: "transform" }}
+                                        >
+                                            <ImageWithFallback
+                                                src={logo}
+                                                alt="Orbital Fitness logo"
+                                                className="w-full h-full object-contain p-8"
+                                            />
+                                        </motion.div>
+
+                                    </div>
                                 </motion.div>
                             </div>
                         </div>
