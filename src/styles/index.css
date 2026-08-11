@@ -6,8 +6,97 @@ html {
   scroll-behavior: smooth;
 }
 
+.orbital-mark__ring {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+.orbital-mark__ring--outer {
+  inset: 0;
+  background: conic-gradient(
+    from 35deg,
+    rgba(103, 232, 249, 0),
+    rgba(103, 232, 249, 0.68),
+    rgba(223, 251, 255, 0.28),
+    rgba(103, 232, 249, 0)
+  );
+  opacity: 0.72;
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+}
+
+.orbital-mark__ring--inner {
+  inset: 22%;
+  background: conic-gradient(
+    from 180deg,
+    rgba(103, 232, 249, 0),
+    rgba(223, 251, 255, 0.42),
+    rgba(103, 232, 249, 0)
+  );
+  opacity: 0.46;
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 0.5px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 0.5px));
+}
+
+.orbital-mark__dot {
+  position: absolute;
+  left: 50%;
+  top: -1px;
+  height: 4px;
+  width: 4px;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  background: #67e8f9;
+  box-shadow: 0 0 14px rgba(103, 232, 249, 0.78);
+}
+
+.orbital-mark--animated .orbital-mark__ring--outer {
+  animation: orbital-mark-spin 14s linear infinite;
+}
+
+.orbital-mark--animated .orbital-mark__ring--inner {
+  animation: orbital-mark-spin-reverse 18s linear infinite;
+}
+
+@keyframes orbital-mark-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbital-mark-spin-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .orbital-mark--animated .orbital-mark__ring {
+    animation: none !important;
+  }
+}
+
 body {
   overflow-x: hidden;
+  background: #031018;
+}
+
+::selection {
+  background: rgba(103, 232, 249, 0.28);
+  color: #ffffff;
 }
 
 /* Custom scrollbar for webkit browsers */
@@ -16,14 +105,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0A0A0F;
+  background: #031018;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #9D4DFF, #6CFFF3);
+  background: linear-gradient(180deg, #67E8F9, #0EA5E9);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #6CFFF3, #9D4DFF);
+  background: linear-gradient(180deg, #DFFBFF, #38BDF8);
 }

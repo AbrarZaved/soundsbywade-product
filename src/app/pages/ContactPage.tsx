@@ -1,391 +1,295 @@
-import { useState, useEffect } from "react";
-import { motion } from "motion/react";
-import { Phone, Mail, Clock, ChevronDown, Send } from "lucide-react";
+import { MotionConfig } from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router";
+import { ArrowRight, Building2, Users } from "lucide-react";
+import { setPageMeta } from "../lib/meta";
+
+const API_BASE_URL = ((import.meta.env.VITE_API_BASE_URL as string | undefined) ?? "").replace(/\/$/, "");
+const DEMO_REQUEST_ENDPOINT = `${API_BASE_URL}/api/v1/public/demo-requests/`;
+
+const initialForm = {
+  name: "",
+  organization: "",
+  workEmail: "",
+  role: "",
+  numberOfPools: "",
+  message: "",
+  companyWebsite: "",
+};
+
+type SubmitStatus = "idle" | "submitting" | "success" | "error";
+
+const demoNotes = [
+  {
+    icon: Building2,
+    title: "Management Companies",
+    copy: "Portfolio oversight, operations, staff workflows, chemistry, maintenance, and incidents.",
+  },
+  {
+    icon: Users,
+    title: "Pool Boards",
+    copy: "Memberships, payments, events, communication, administration, and the member experience.",
+  },
+];
 
 export function ContactPage() {
+  const [formData, setFormData] = useState(initialForm);
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
+  const submitInFlightRef = useRef(false);
+
   useEffect(() => {
-    document.title = "Contact & Demo - Orbital Fitness";
+    setPageMeta(
+      "Book a Demo | Orbital Aquatics",
+      "Request a demo of Orbital Aquatics for your pool management company or community pool board.",
+    );
   }, []);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    gymName: "",
-    email: "",
-    phone: "",
-    states: "",
-    currentSoftware: "",
-    preferredTime: "",
-  });
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (submitInFlightRef.current) return;
 
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+    if (formData.companyWebsite.trim()) {
+      setSubmitStatus("success");
+      return;
+    }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log("Form submitted:", formData);
-    alert("Thank you! We'll be in touch soon to schedule your demo.");
+    submitInFlightRef.current = true;
+    setSubmitStatus("submitting");
+
+    try {
+      const response = await fetch(DEMO_REQUEST_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          organization: formData.organization,
+          work_email: formData.workEmail,
+          role: formData.role,
+          number_of_pools: Number(formData.numberOfPools),
+          message: formData.message,
+          company_website: formData.companyWebsite,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Demo request failed");
+      }
+
+      setSubmitStatus("success");
+    } catch {
+      submitInFlightRef.current = false;
+      setSubmitStatus("error");
+    }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = event.target;
+    setFormData((current) => ({ ...current, [name]: value }));
   };
 
-  const faqs = [
-    {
-      question: "What makes Orbital Fitness different from other gym management software?",
-      answer: "Orbital Fitness is the only truly all-in-one platform that combines payment processing, CRM, scheduling, workout building, merchandise sales, and client communications in a single, seamless ecosystem. Plus, our founding members lock in a lifetime 1% transaction fee—the lowest in the industry.",
-    },
-    {
-      question: "Is there a long-term contract required?",
-      answer: "No! We offer flexible month-to-month plans with no long-term commitments. We're confident you'll love Orbital Fitness, but we never want to lock you in against your will.",
-    },
-    {
-      question: "How long does it take to migrate to Orbital Fitness?",
-      answer: "Most studios complete their migration within 1-2 weeks. Our dedicated onboarding team provides white-glove support, including data migration assistance, staff training, and personalized setup to ensure a smooth transition.",
-    },
-    {
-      question: "Can I try Orbital Fitness before committing?",
-      answer: "Absolutely! Schedule a live demo with our team, and we'll give you a comprehensive tour of the platform. We also offer a 30-day trial period so you can experience the full power of Orbital Fitness risk-free.",
-    },
-    {
-      question: "What kind of support do you offer?",
-      answer: "We provide lightning-fast support via live chat, email, and phone. Our team averages a response time of under 2 hours, and we're committed to solving your issues quickly so you can focus on running your studio.",
-    },
-  ];
+  const isSubmitting = submitStatus === "submitting";
 
   return (
-    <div className="relative pb-20">
-      {/* Hero Section */}
-      <section className="relative py-20 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-[#9D4DFF] to-[#6CFFF3] bg-clip-text text-transparent">
-              Ready for Liftoff?
-            </h1>
-            <p className="text-xl text-white/80 max-w-3xl mx-auto mb-12">
-              Schedule your exclusive demo and discover how Orbital Fitness can transform your studio operations. No pressure, just pure innovation.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+    <MotionConfig reducedMotion="user">
+      <div className="relative">
+        <section className="relative overflow-hidden px-5 py-16 sm:px-6 lg:py-24">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_28%,rgba(103,232,249,0.14),transparent_35%)]" />
+          <div className="relative mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.72fr_0.88fr] lg:items-start">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100/70">BOOK A DEMO</p>
+              <h1 className="mt-5 max-w-4xl text-4xl font-semibold leading-[1.02] tracking-normal text-white sm:text-6xl lg:text-7xl">
+                See how Orbital could work for your operation.
+              </h1>
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
+                Tell us a little about your organization and we’ll show you how Orbital can help bring your pools, people, and day-to-day work into one clearer system.
+              </p>
 
-      {/* Main Content - Split Layout */}
-      <section className="relative px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* LEFT HALF - Lead Capture Form */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="relative"
-            >
-              <div className="absolute -inset-4 bg-gradient-to-r from-[#9D4DFF]/20 to-[#6CFFF3]/20 rounded-3xl blur-3xl" />
-              <div className="relative backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-8 md:p-10">
-                <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-white to-[#9D4DFF] bg-clip-text text-transparent">
-                  Schedule Your Demo
-                </h2>
-                <p className="text-white/70 mb-8">
-                  Fill out the form below and we'll be in touch within 24 hours to schedule your personalized tour.
-                </p>
-
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Name */}
-                  <div>
-                    <label htmlFor="name" className="block text-white mb-2 text-sm font-medium">
-                      Your Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-xl backdrop-blur-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#6CFFF3] transition"
-                      placeholder="John Smith"
-                    />
-                  </div>
-
-                  {/* Gym Name */}
-                  <div>
-                    <label htmlFor="gymName" className="block text-white mb-2 text-sm font-medium">
-                      Gym/Studio Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="gymName"
-                      name="gymName"
-                      value={formData.gymName}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-xl backdrop-blur-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#6CFFF3] transition"
-                      placeholder="Momentum Fitness"
-                    />
-                  </div>
-
-                  {/* Email */}
-                  <div>
-                    <label htmlFor="email" className="block text-white mb-2 text-sm font-medium">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-xl backdrop-blur-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#6CFFF3] transition"
-                      placeholder="you@yourgym.com"
-                    />
-                  </div>
-
-                  {/* Phone */}
-                  <div>
-                    <label htmlFor="phone" className="block text-white mb-2 text-sm font-medium">
-                      Phone Number *
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-xl backdrop-blur-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#6CFFF3] transition"
-                      placeholder="(555) 123-4567"
-                    />
-                  </div>
-
-                  {/* States */}
-                  <div>
-                    <label htmlFor="states" className="block text-white mb-2 text-sm font-medium">
-                      State(s) of Operation *
-                    </label>
-                    <input
-                      type="text"
-                      id="states"
-                      name="states"
-                      value={formData.states}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-xl backdrop-blur-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#6CFFF3] transition"
-                      placeholder="California, Texas"
-                    />
-                  </div>
-
-                  {/* Current Software */}
-                  <div>
-                    <label htmlFor="currentSoftware" className="block text-white mb-2 text-sm font-medium">
-                      Current Software (Optional)
-                    </label>
-                    <input
-                      type="text"
-                      id="currentSoftware"
-                      name="currentSoftware"
-                      value={formData.currentSoftware}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl backdrop-blur-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#6CFFF3] transition"
-                      placeholder="Mindbody, Zen Planner, etc."
-                    />
-                  </div>
-
-                  {/* Preferred Meeting Time */}
-                  <div>
-                    <label htmlFor="preferredTime" className="block text-white mb-2 text-sm font-medium">
-                      Preferred Meeting Time
-                    </label>
-                    <select
-                      id="preferredTime"
-                      name="preferredTime"
-                      value={formData.preferredTime}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl backdrop-blur-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-[#6CFFF3] transition"
-                    >
-                      <option value="" className="bg-[#0A0A0F]">Select a time</option>
-                      <option value="morning" className="bg-[#0A0A0F]">Morning (9am - 12pm)</option>
-                      <option value="afternoon" className="bg-[#0A0A0F]">Afternoon (12pm - 5pm)</option>
-                      <option value="evening" className="bg-[#0A0A0F]">Evening (5pm - 8pm)</option>
-                    </select>
-                  </div>
-
-                  {/* Submit Button */}
-                  <motion.button
-                    type="submit"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="relative w-full group"
-                  >
-                    <div className="absolute -inset-1 bg-gradient-to-r from-[#9D4DFF] to-[#6CFFF3] rounded-xl opacity-70 blur group-hover:opacity-100 transition" />
-                    <div className="relative w-full px-8 py-4 bg-gradient-to-r from-[#9D4DFF] to-[#3C22FF] rounded-xl text-white font-semibold flex items-center justify-center gap-2">
-                      Schedule Demo
-                      <Send className="w-5 h-5" />
-                    </div>
-                  </motion.button>
-                </form>
+              <div className="mt-10 divide-y divide-white/10 border-y border-white/10">
+                {demoNotes.map((note) => {
+                  const Icon = note.icon;
+                  return (
+                    <section key={note.title} className="py-5">
+                      <div className="flex items-center gap-3">
+                        <Icon className="h-4 w-4 text-cyan-100" aria-hidden="true" />
+                        <h2 className="text-sm font-semibold text-white">{note.title}</h2>
+                      </div>
+                      <p className="mt-3 max-w-xl text-sm leading-6 text-slate-300">{note.copy}</p>
+                    </section>
+                  );
+                })}
               </div>
-            </motion.div>
-
-            {/* RIGHT HALF - Direct Contact Info */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="space-y-8"
-            >
-              {/* Contact Cards */}
-              <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-r from-[#6CFFF3]/20 to-[#9D4DFF]/20 rounded-3xl blur-3xl" />
-                <div className="relative backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-8">
-                  <h3 className="text-2xl font-bold text-white mb-6">Direct Contact</h3>
-                  
-                  <div className="space-y-6">
-                    {/* Ian's Contact */}
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-full backdrop-blur-xl bg-white/10 border border-[#9D4DFF]/50 flex items-center justify-center flex-shrink-0">
-                        <Phone className="w-6 h-6 text-[#6CFFF3]" />
-                      </div>
-                      <div>
-                        <p className="text-white font-semibold">Quinn</p>
-                        <p className="text-white/70 text-sm mb-1">Co-Founder</p>
-                        <a href="tel:+12026696327" className="text-[#6CFFF3] hover:text-[#9D4DFF] transition">
-                          +1 202 669 6327
-                        </a>
-                      </div>
-                    </div>
-
-                    {/* Andrew's Contact */}
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-full backdrop-blur-xl bg-white/10 border border-[#9D4DFF]/50 flex items-center justify-center flex-shrink-0">
-                        <Phone className="w-6 h-6 text-[#6CFFF3]" />
-                      </div>
-                      <div>
-                        <p className="text-white font-semibold">Andrew</p>
-                        <p className="text-white/70 text-sm mb-1">Co-Founder</p>
-          
-                        <a href="tel:+12024410950" className="text-[#6CFFF3] hover:text-[#9D4DFF] transition">
-                          +1 202 441 0950
-                        </a>
-                      </div>
-                    </div>
-
-                    {/* Email */}
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-full backdrop-blur-xl bg-white/10 border border-[#9D4DFF]/50 flex items-center justify-center flex-shrink-0">
-                        <Mail className="w-6 h-6 text-[#6CFFF3]" />
-                      </div>
-                      <div>
-                        <p className="text-white font-semibold">Email Us</p>
-                        <div className="flex flex-col">
-                          <a href="mailto:quinnmacintyre@orbitalfitness.us" className="text-[#6CFFF3] hover:text-[#9D4DFF] transition">
-                            quinnmacintyre@orbitalfitness.us
-                          </a>
-                          <a href="mailto:legal@orbitalfitness.us" className="text-[#6CFFF3] hover:text-[#9D4DFF] transition">
-                            legal@orbitalfitness.us
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Hours */}
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-full backdrop-blur-xl bg-white/10 border border-[#9D4DFF]/50 flex items-center justify-center flex-shrink-0">
-                        <Clock className="w-6 h-6 text-[#6CFFF3]" />
-                      </div>
-                      <div>
-                        <p className="text-white font-semibold">Support Hours</p>
-                        <p className="text-white/70">Mon-Fri: 8am - 8pm EST</p>
-                        <p className="text-white/70">Sat-Sun: 10am - 6pm EST</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Quick Stats */}
-              <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-r from-[#9D4DFF]/20 to-[#6CFFF3]/20 rounded-3xl blur-3xl" />
-                <div className="relative backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-8">
-                  <h3 className="text-xl font-bold text-white mb-6">Why Studio Owners Love Us</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-white/80">Average Response Time</span>
-                      <span className="text-[#6CFFF3] font-bold">{"< 2 hours"}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-white/80">Customer Satisfaction</span>
-                      <span className="text-[#6CFFF3] font-bold">98%</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-white/80">Average Migration Time</span>
-                      <span className="text-[#6CFFF3] font-bold">1-2 weeks</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-white/80">Founders Fee (Lifetime)</span>
-                      <span className="text-[#6CFFF3] font-bold">1%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="relative py-20 px-6">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-white to-[#9D4DFF] bg-clip-text text-transparent">
-              Frequently Asked Questions
-            </h2>
-
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div
-                  key={index}
-                  className="relative backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl overflow-hidden"
-                >
-                  <button
-                    onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                    className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/5 transition"
-                  >
-                    <span className="text-white font-semibold pr-4">{faq.question}</span>
-                    <motion.div
-                      animate={{ rotate: expandedFaq === index ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <ChevronDown className="w-5 h-5 text-[#6CFFF3] flex-shrink-0" />
-                    </motion.div>
-                  </button>
-                  <motion.div
-                    initial={false}
-                    animate={{ height: expandedFaq === index ? "auto" : 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="px-6 pb-5 text-white/80 leading-relaxed">
-                      {faq.answer}
-                    </div>
-                  </motion.div>
-                </div>
-              ))}
             </div>
-          </motion.div>
-        </div>
-      </section>
+
+            <div className="relative">
+              <div className="absolute -inset-6 bg-cyan-200/10 blur-3xl" />
+              {submitStatus === "success" ? (
+                <div className="relative border border-cyan-100/20 bg-[#06111d]/86 p-6 shadow-2xl shadow-cyan-950/30 sm:p-8" aria-live="polite">
+                  <div className="max-w-xl">
+                    <p className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100/70">REQUEST RECEIVED</p>
+                    <h2 className="mt-4 text-3xl font-semibold leading-tight text-white">Thanks — we’ll be in touch.</h2>
+                    <p className="mt-4 text-base leading-7 text-slate-300">
+                      We received your request and will follow up soon to learn more about your pools and show you how Orbital could fit your operation.
+                    </p>
+                    <Link
+                      to="/"
+                      className="mt-7 inline-flex min-h-11 items-center justify-center rounded-sm border border-white/12 px-4 py-2.5 text-sm font-semibold text-cyan-100 transition hover:border-cyan-200/40 hover:bg-cyan-100/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200"
+                    >
+                      Back to Orbital
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <form
+                  onSubmit={handleSubmit}
+                  className="relative grid gap-5 border border-white/10 bg-[#06111d]/86 p-5 shadow-2xl shadow-cyan-950/30 sm:p-8"
+                  aria-busy={isSubmitting}
+                >
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <Field label="Name" name="name" value={formData.name} onChange={handleChange} required placeholder="Your name" maxLength={120} />
+                    <Field
+                      label="Organization"
+                      name="organization"
+                      value={formData.organization}
+                      onChange={handleChange}
+                      required
+                      placeholder="Organization name"
+                      maxLength={160}
+                    />
+                  </div>
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <Field
+                      label="Work Email"
+                      name="workEmail"
+                      type="email"
+                      value={formData.workEmail}
+                      onChange={handleChange}
+                      required
+                      placeholder="you@example.com"
+                      maxLength={254}
+                    />
+                    <Field label="Role" name="role" value={formData.role} onChange={handleChange} placeholder="Board member, owner, manager" maxLength={120} />
+                  </div>
+                  <Field
+                    label="Number of Pools"
+                    name="numberOfPools"
+                    type="number"
+                    value={formData.numberOfPools}
+                    onChange={handleChange}
+                    required
+                    placeholder="8"
+                    min={1}
+                    max={10000}
+                    inputMode="numeric"
+                  />
+                  <div>
+                    <label htmlFor="message" className="mb-2 block text-sm font-semibold text-white">
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      rows={5}
+                      maxLength={2000}
+                      className="w-full resize-none border border-white/12 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-200"
+                      placeholder="Tell us what you are trying to simplify."
+                    />
+                  </div>
+
+                  <div className="hidden" aria-hidden="true">
+                    <label htmlFor="companyWebsite">Company Website</label>
+                    <input
+                      id="companyWebsite"
+                      name="companyWebsite"
+                      type="text"
+                      value={formData.companyWebsite}
+                      onChange={handleChange}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+
+                  <div className="grid gap-3">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-sm bg-cyan-100 px-5 py-3 text-sm font-semibold text-slate-950 shadow-xl shadow-cyan-950/10 transition duration-200 hover:-translate-y-0.5 hover:bg-white hover:shadow-cyan-200/12 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950 disabled:pointer-events-none disabled:opacity-70"
+                    >
+                      {isSubmitting ? "Sending..." : "Request Demo"}
+                      <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+                    </button>
+
+                    <p className="text-xs leading-5 text-slate-400">
+                      By submitting this form, you agree that Orbital may contact you about your inquiry.{" "}
+                      <Link to="/privacy" className="font-semibold text-cyan-100 underline-offset-4 hover:underline">
+                        Privacy Policy
+                      </Link>
+                    </p>
+                  </div>
+
+                  {submitStatus === "error" && (
+                    <div role="alert" className="border border-rose-300/25 bg-rose-300/[0.08] px-4 py-3 text-sm font-semibold text-rose-100">
+                      We couldn’t send your request. Please try again in a moment.
+                    </div>
+                  )}
+                </form>
+              )}
+            </div>
+          </div>
+        </section>
+      </div>
+    </MotionConfig>
+  );
+}
+
+function Field({
+  label,
+  name,
+  value,
+  onChange,
+  type = "text",
+  required,
+  placeholder,
+  min,
+  max,
+  inputMode,
+  maxLength,
+}: {
+  label: string;
+  name: string;
+  value: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  type?: string;
+  required?: boolean;
+  placeholder?: string;
+  min?: number;
+  max?: number;
+  inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
+  maxLength?: number;
+}) {
+  return (
+    <div>
+      <label htmlFor={name} className="mb-2 block text-sm font-semibold text-white">
+        {label}
+        {required ? " *" : ""}
+      </label>
+      <input
+        id={name}
+        name={name}
+        type={type}
+        value={value}
+        onChange={onChange}
+        required={required}
+        placeholder={placeholder}
+        min={min}
+        max={max}
+        inputMode={inputMode}
+        maxLength={maxLength}
+        className="w-full border border-white/12 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-200"
+      />
     </div>
   );
 }
