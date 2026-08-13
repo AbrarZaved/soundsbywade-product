@@ -24,8 +24,8 @@ export function Header() {
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className="fixed left-0 right-0 top-0 z-50 border-b border-white/[0.08] bg-slate-950/82 backdrop-blur-xl"
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-6">
-        <Link to="/" className="group flex items-center gap-3" onClick={() => setMobileMenuOpen(false)}>
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-4 sm:px-6">
+        <Link to="/" className="group flex min-w-0 items-center gap-3" onClick={() => setMobileMenuOpen(false)}>
           <OrbitalMark size="header" />
           <span className="flex flex-col leading-none">
             <span className="text-base font-semibold tracking-normal text-white">Orbital</span>
@@ -33,7 +33,7 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-7 xl:flex">
+        <nav className="hidden items-center gap-4 lg:flex xl:gap-7">
           {navLinks.map((link) => {
             const active = isActivePath(link.to);
 
@@ -59,7 +59,7 @@ export function Header() {
           })}
         </nav>
 
-        <div className="hidden items-center gap-4 xl:flex">
+        <div className="hidden items-center gap-4 lg:flex">
           <Link
             to="/contact"
             className="group inline-flex min-h-11 items-center justify-center gap-2 rounded-sm bg-cyan-100 px-4 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-950/10 transition duration-200 hover:-translate-y-0.5 hover:bg-white hover:shadow-cyan-200/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
@@ -72,7 +72,7 @@ export function Header() {
         <button
           type="button"
           onClick={() => setMobileMenuOpen((open) => !open)}
-          className="inline-flex h-10 w-10 items-center justify-center border border-white/10 text-white transition hover:border-cyan-200/40 hover:bg-cyan-100/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/70 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950 xl:hidden"
+          className="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-white/10 text-white transition hover:border-cyan-200/40 hover:bg-cyan-100/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/70 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950 lg:hidden"
           aria-label={mobileMenuOpen ? "Close navigation" : "Open navigation"}
           aria-expanded={mobileMenuOpen}
         >
@@ -84,7 +84,7 @@ export function Header() {
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="border-t border-white/10 bg-slate-950/96 px-5 pb-6 pt-2 xl:hidden"
+          className="border-t border-white/10 bg-slate-950/96 px-5 pb-6 pt-2 lg:hidden"
         >
           <nav className="mx-auto flex max-w-7xl flex-col">
             {navLinks.map((link) => (
