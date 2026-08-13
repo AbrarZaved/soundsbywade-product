@@ -41,17 +41,22 @@ export function HomePage() {
       <div className="relative">
         <section className="relative overflow-hidden px-5 py-16 sm:px-6 lg:py-24">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_76%_42%,rgba(103,232,249,0.14),transparent_34%),linear-gradient(180deg,rgba(3,16,24,0)_0%,rgba(3,16,24,0.76)_100%)]" />
-          <div className="relative mx-auto grid max-w-[1240px] gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
-            <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
+          <div className="relative mx-auto grid min-w-0 max-w-[1240px] gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+            <motion.div
+              className="min-w-0"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55 }}
+            >
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100/70">
                 THE OPERATING SYSTEM FOR AQUATICS
               </p>
-              <h1 className="mt-5 max-w-3xl text-5xl font-semibold leading-[0.96] tracking-normal text-white sm:text-6xl lg:text-7xl">
+              <h1 className="mt-5 max-w-[calc(100vw-2.5rem)] text-[2.7rem] font-semibold leading-[1.02] tracking-normal text-white min-[420px]:text-5xl sm:max-w-3xl sm:text-6xl sm:leading-[0.96] lg:text-7xl">
                 Everything you need to run your pools.
                 <br />
                 In one place.
               </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
+              <p className="mt-6 max-w-[calc(100vw-2.5rem)] text-lg leading-8 text-slate-300 sm:max-w-2xl sm:text-xl">
                 Orbital brings daily operations, administration, communication, and the member experience into one calmer system.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">

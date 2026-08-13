@@ -187,7 +187,6 @@ export function OrbitalEcosystemVisual() {
           <div className="relative text-center">
             <OrbitalMark size="hero" />
             <p className="mt-4 text-xs font-semibold uppercase tracking-[0.34em] text-cyan-100/70">Orbital</p>
-            <p className="mx-auto mt-2 max-w-[8rem] text-sm font-semibold leading-5 text-white">One place for the work</p>
           </div>
         </div>
 
@@ -257,84 +256,111 @@ export function SimpleProductPreview() {
   );
 }
 
-const connectedGroups = [
+const platformStreams = [
   {
     title: "Operations",
-    copy: "Readiness, staffing, chemistry, maintenance, incidents, and follow-up.",
+    action: "Run every pool.",
+    detail: "Readiness, staff, chemistry, maintenance.",
+    icon: <Droplets className="h-4 w-4" aria-hidden="true" />,
   },
   {
     title: "Administration",
-    copy: "Memberships, payments, households, events, and board work.",
+    action: "Manage the business.",
+    detail: "Memberships, payments, households, events.",
+    icon: <CreditCard className="h-4 w-4" aria-hidden="true" />,
   },
   {
     title: "Member Experience",
-    copy: "Hours, updates, announcements, registrations, and pool websites.",
+    action: "Serve the community.",
+    detail: "Hours, updates, registrations, websites.",
+    icon: <MessageSquare className="h-4 w-4" aria-hidden="true" />,
   },
 ];
 
 export function ConnectedSystemVisual() {
   return (
-    <div className="relative mx-auto w-full max-w-[720px]">
-      <div className="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-200/14 blur-3xl" />
+    <div className="relative mx-auto w-full max-w-[760px]">
+      <div className="absolute left-1/2 top-1/2 h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-200/12 blur-3xl" />
 
-      <div className="relative hidden min-h-[540px] lg:block">
-        <svg className="absolute inset-0 h-full w-full" viewBox="0 0 720 540" fill="none" aria-hidden="true">
-          <circle cx="360" cy="270" r="116" stroke="rgba(103,232,249,0.14)" strokeWidth="1" />
-          <circle cx="360" cy="270" r="202" stroke="rgba(103,232,249,0.08)" strokeWidth="1" />
-          <path d="M360 270 C270 164 204 124 96 134" stroke="rgba(103,232,249,0.18)" strokeWidth="1" />
-          <path d="M360 270 C486 156 570 126 668 150" stroke="rgba(103,232,249,0.18)" strokeWidth="1" />
-          <path d="M360 270 C450 394 532 422 628 396" stroke="rgba(103,232,249,0.18)" strokeWidth="1" />
-        </svg>
+      <div className="relative overflow-hidden rounded-[2rem] border border-white/12 bg-[#04121d]/78 p-5 shadow-2xl shadow-cyan-950/30 backdrop-blur-md sm:p-6 lg:p-7">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_18%,rgba(103,232,249,0.14),transparent_34%),linear-gradient(135deg,rgba(255,255,255,0.065),transparent_42%)]" />
+        <div className="absolute inset-x-8 top-1/2 h-px bg-gradient-to-r from-transparent via-cyan-100/16 to-transparent" />
 
-        <motion.div
-          aria-hidden="true"
-          className="absolute left-1/2 top-1/2 h-[25rem] w-[25rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-cyan-100/16"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
-        >
-          <span className="absolute left-1/2 top-[-4px] h-2 w-2 -translate-x-1/2 rounded-full bg-cyan-200 shadow-[0_0_18px_rgba(103,232,249,0.8)]" />
-        </motion.div>
-
-        <div className="absolute left-1/2 top-1/2 z-20 flex h-48 w-48 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-cyan-100/25 bg-[#04131d]/92 text-center shadow-2xl shadow-cyan-950/50">
-          <div className="absolute inset-4 rounded-full bg-cyan-200/8 blur-xl" />
-          <div className="relative">
-            <OrbitalMark size="hero" />
-            <p className="mt-4 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-100/70">Orbital</p>
-            <p className="mx-auto mt-3 max-w-[8.5rem] text-sm font-semibold leading-5 text-white">The shared operating picture</p>
-          </div>
-        </div>
-
-        <PlatformWorld group={connectedGroups[0]} className="left-0 top-[14%] w-[245px]" />
-        <PlatformWorld group={connectedGroups[1]} className="right-0 top-[14%] w-[255px]" />
-        <PlatformWorld group={connectedGroups[2]} className="right-[8%] bottom-[12%] w-[265px]" />
-      </div>
-
-      <div className="relative grid gap-6 lg:hidden">
-        <div className="mx-auto flex h-44 w-44 items-center justify-center rounded-full border border-cyan-100/25 bg-cyan-100/[0.06] text-center shadow-2xl shadow-cyan-950/40">
+        <div className="relative flex items-center justify-between gap-4 border-b border-white/10 pb-5">
           <div>
-            <OrbitalMark size="hero" />
-            <p className="mt-3 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-100/70">Orbital</p>
-            <p className="mx-auto mt-2 max-w-[8rem] text-sm font-semibold leading-5 text-white">The shared picture</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-cyan-100/70">CONNECTED PLATFORM</p>
+            <p className="mt-2 max-w-sm text-sm leading-6 text-slate-300">
+              Daily pool work, records, and member touchpoints in one calmer system.
+            </p>
+          </div>
+          <div className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-full border border-cyan-100/20 bg-cyan-100/8 text-cyan-50 sm:flex">
+            <Check className="h-4 w-4" aria-hidden="true" />
           </div>
         </div>
-        <div className="divide-y divide-white/10 border-y border-white/10">
-          {connectedGroups.map((group) => (
-            <PlatformWorld key={group.title} group={group} />
-          ))}
+
+        <div className="relative mt-7 grid gap-6 xl:grid-cols-[1fr_5.5rem_1fr] xl:items-center">
+          <div className="grid gap-3">
+            {platformStreams.map((stream, index) => (
+              <motion.div
+                key={stream.title}
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.45, delay: index * 0.06 }}
+                className="relative overflow-hidden rounded-xl border border-white/10 bg-slate-950/58 p-4 shadow-xl shadow-cyan-950/12"
+              >
+                <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-cyan-100/[0.07] to-transparent opacity-80" />
+                <div className="relative flex items-start gap-3">
+                  <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-cyan-100/20 bg-cyan-100/8 text-cyan-50">
+                    {stream.icon}
+                  </span>
+                  <span>
+                    <span className="block text-[10px] font-semibold uppercase tracking-[0.22em] text-cyan-100/70">{stream.title}</span>
+                    <span className="mt-2 block text-base font-semibold leading-5 text-white">{stream.action}</span>
+                    <span className="mt-2 block text-sm leading-6 text-slate-400">{stream.detail}</span>
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="relative mx-auto hidden h-full min-h-[18rem] w-20 xl:block" aria-hidden="true">
+            <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-cyan-100/30 to-transparent" />
+            <motion.span
+              className="absolute left-1/2 top-[12%] h-2 w-2 -translate-x-1/2 rounded-full bg-cyan-200 shadow-[0_0_20px_rgba(103,232,249,0.8)]"
+              animate={{ y: [0, 190, 0], opacity: [0.35, 1, 0.35] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <span className="absolute left-1/2 top-[22%] h-px w-16 -translate-x-full bg-gradient-to-l from-cyan-100/28 to-transparent" />
+            <span className="absolute left-1/2 top-1/2 h-px w-16 -translate-x-full bg-gradient-to-l from-cyan-100/28 to-transparent" />
+            <span className="absolute left-1/2 top-[78%] h-px w-16 -translate-x-full bg-gradient-to-l from-cyan-100/28 to-transparent" />
+            <span className="absolute left-1/2 top-1/2 h-px w-16 bg-gradient-to-r from-cyan-100/28 to-transparent" />
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.55, delay: 0.12 }}
+            className="relative overflow-hidden rounded-[1.55rem] border border-cyan-100/18 bg-[#020a13]/86 p-5 text-center shadow-2xl shadow-cyan-950/35 sm:p-6"
+          >
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(103,232,249,0.17),transparent_42%)]" />
+            <div className="relative mx-auto flex h-32 w-32 items-center justify-center rounded-full border border-cyan-100/20 bg-cyan-100/[0.055] shadow-[0_0_70px_rgba(103,232,249,0.14)]">
+              <OrbitalMark size="hero" />
+            </div>
+            <p className="relative mt-5 text-xs font-semibold uppercase tracking-[0.32em] text-cyan-100/70">Orbital</p>
+            <h3 className="relative mt-3 text-2xl font-semibold leading-tight text-white">One connected platform.</h3>
+            <p className="relative mx-auto mt-3 max-w-[18rem] text-sm leading-6 text-slate-300">
+              The people running the pool see the same operation from every angle.
+            </p>
+            <div className="relative mt-6 grid grid-cols-3 gap-px overflow-hidden rounded-lg border border-white/10 bg-white/10">
+              {["Ops", "Admin", "Members"].map((item) => (
+                <span key={item} className="bg-slate-950/76 px-2 py-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-cyan-50">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </div>
-    </div>
-  );
-}
-
-function PlatformWorld({ group, className = "" }: { group: { title: string; copy: string }; className?: string }) {
-  return (
-    <div className={`py-5 lg:absolute lg:py-0 ${className}`}>
-      <div className="mb-4 flex items-center gap-3">
-        <span className="h-px w-10 bg-cyan-100/35" />
-        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-50">{group.title}</p>
-      </div>
-      <p className="max-w-sm text-sm leading-6 text-slate-300">{group.copy}</p>
     </div>
   );
 }

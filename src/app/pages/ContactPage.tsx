@@ -194,7 +194,7 @@ export function ContactPage() {
                       onChange={handleChange}
                       rows={5}
                       maxLength={2000}
-                      className="w-full resize-none border border-white/12 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-200"
+                      className="w-full resize-none border border-white/12 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-200 focus:ring-2 focus:ring-cyan-200/20"
                       placeholder="Tell us what you are trying to simplify."
                     />
                   </div>
@@ -288,7 +288,7 @@ function Field({
         max={max}
         inputMode={inputMode}
         maxLength={maxLength}
-        className="w-full border border-white/12 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-200"
+        className="w-full border border-white/12 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-200 focus:ring-2 focus:ring-cyan-200/20"
       />
     </div>
   );
