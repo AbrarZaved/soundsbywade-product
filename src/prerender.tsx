@@ -53,19 +53,63 @@ function outputPathForRoute(routePath: string) {
   return path.join(distDir, `${routePath.replace(/^\//, "")}.html`);
 }
 
-for (const meta of routeMeta) {
+function alternateOutputPathForRoute(routePath: string) {
+  if (routePath === "/") return null;
+  return path.join(distDir, routePath.replace(/^\//, ""), "index.html");
+}
+
+function writePrerenderedPage({
+  routePath,
+  outputPath,
+  title,
+  description,
+  canonicalUrl,
+}: {
+  routePath: string;
+  outputPath: string;
+  title: string;
+  description: string;
+  canonicalUrl: string;
+}) {
   const body = renderToString(
-    <StaticRouter location={meta.path}>
+    <StaticRouter location={routePath}>
       <AppRoutes />
     </StaticRouter>,
   );
-  const canonicalUrl = getCanonicalUrl(meta.path);
-  const pageHtml = injectHead(template, meta.title, meta.description, canonicalUrl).replace(
+  const pageHtml = injectHead(template, title, description, canonicalUrl).replace(
     '<div id="root"></div>',
     `<div id="root">${body}</div>`,
   );
-  const outputPath = outputPathForRoute(meta.path);
 
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, pageHtml);
 }
+
+for (const meta of routeMeta) {
+  const page = {
+    routePath: meta.path,
+    outputPath: outputPathForRoute(meta.path),
+    title: meta.title,
+    description: meta.description,
+    canonicalUrl: getCanonicalUrl(meta.path),
+  };
+  writePrerenderedPage({
+    ...page,
+  });
+
+  const alternateOutputPath = alternateOutputPathForRoute(meta.path);
+  if (alternateOutputPath) {
+    writePrerenderedPage({
+      ...page,
+      outputPath: alternateOutputPath,
+    });
+  }
+}
+
+writePrerenderedPage({
+  routePath: "/404",
+  outputPath: path.join(distDir, "404.html"),
+  title: "Page Not Found | Orbital Aquatics",
+  description: "The requested Orbital Aquatics page could not be found.",
+  canonicalUrl: getCanonicalUrl("/404"),
+});
