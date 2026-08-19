@@ -17,11 +17,14 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 # nginx config to support client-side routing (React Router) + API proxy
 RUN printf 'server {\n\
     listen 80;\n\
+    resolver 127.0.0.11 valid=10s ipv6=off;\n\
+    resolver_timeout 5s;\n\
     root /usr/share/nginx/html;\n\
     index index.html;\n\
     \n\
     location /api/ {\n\
-        proxy_pass http://web:8000;\n\
+        set $orbital_backend web:8000;\n\
+        proxy_pass http://$orbital_backend$request_uri;\n\
         proxy_set_header Host $host;\n\
         proxy_set_header X-Real-IP $remote_addr;\n\
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n\
