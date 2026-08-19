@@ -22,6 +22,14 @@ RUN printf 'server {\n\
     root /usr/share/nginx/html;\n\
     index index.html;\n\
     \n\
+    location = /overview {\n\
+        return 301 /platform;\n\
+    }\n\
+    \n\
+    location = /privacy-policy {\n\
+        return 301 /privacy;\n\
+    }\n\
+    \n\
     location /api/ {\n\
         set $orbital_backend web:8000;\n\
         proxy_pass http://$orbital_backend$request_uri;\n\

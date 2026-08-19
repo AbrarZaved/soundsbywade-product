@@ -7,6 +7,7 @@ import { AppRoutes } from "./app/routes";
 import { getCanonicalUrl, routeMeta } from "./app/lib/meta";
 
 const distDir = path.resolve(process.cwd(), "dist");
+const ssrDir = path.resolve(process.cwd(), "dist-ssr");
 const templatePath = path.join(distDir, "index.html");
 const template = fs.readFileSync(templatePath, "utf8");
 
@@ -18,34 +19,71 @@ function escapeHtml(value: string) {
     .replace(/"/g, "&quot;");
 }
 
+function replaceRequired(html: string, pattern: RegExp, replacement: string, label: string) {
+  const matches = html.match(pattern);
+  if (!matches?.length) {
+    throw new Error(`Prerender template is missing required SEO tag: ${label}`);
+  }
+  if (matches.length > 1) {
+    throw new Error(`Prerender template contains duplicate SEO tags for: ${label}`);
+  }
+  return html.replace(pattern, replacement);
+}
+
+function assertSingle(html: string, pattern: RegExp, label: string) {
+  const matches = html.match(pattern);
+  if (matches?.length !== 1) {
+    throw new Error(`Expected exactly one ${label}; found ${matches?.length ?? 0}`);
+  }
+}
+
+function assertInjectedHead(html: string) {
+  assertSingle(html, /<title>[\s\S]*?<\/title>/g, "title tag");
+  assertSingle(html, /<meta\s+name="description"\s+content="[^"]*"\s*\/>/g, "meta description tag");
+  assertSingle(html, /<link\s+rel="canonical"\s+href="[^"]*"\s*\/>/g, "canonical link tag");
+  assertSingle(html, /<meta\s+property="og:url"\s+content="[^"]*"\s*\/>/g, "Open Graph URL tag");
+  assertSingle(html, /<meta\s+property="og:title"\s+content="[^"]*"\s*\/>/g, "Open Graph title tag");
+  assertSingle(html, /<meta\s+property="og:description"\s+content="[^"]*"\s*\/>/g, "Open Graph description tag");
+  assertSingle(html, /<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/>/g, "Twitter title tag");
+  assertSingle(html, /<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/>/g, "Twitter description tag");
+}
+
 function injectHead(html: string, title: string, description: string, canonicalUrl: string) {
-  return html
-    .replace(/<title>.*?<\/title>/, `<title>${escapeHtml(title)}</title>`)
-    .replace(
+  const injected = [
+    [/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(title)}</title>`, "title"],
+    [
       /<meta\s+name="description"\s+content="[^"]*"\s*\/>/,
       `<meta name="description" content="${escapeHtml(description)}" />`,
-    )
-    .replace(/<link\s+rel="canonical"\s+href="[^"]*"\s*\/>/, `<link rel="canonical" href="${canonicalUrl}" />`)
-    .replace(
-      /<meta\s+property="og:url"\s+content="[^"]*"\s*\/>/,
-      `<meta property="og:url" content="${canonicalUrl}" />`,
-    )
-    .replace(
+      "description",
+    ],
+    [/<link\s+rel="canonical"\s+href="[^"]*"\s*\/>/, `<link rel="canonical" href="${canonicalUrl}" />`, "canonical"],
+    [/<meta\s+property="og:url"\s+content="[^"]*"\s*\/>/, `<meta property="og:url" content="${canonicalUrl}" />`, "og:url"],
+    [
       /<meta\s+property="og:title"\s+content="[^"]*"\s*\/>/,
       `<meta property="og:title" content="${escapeHtml(title)}" />`,
-    )
-    .replace(
+      "og:title",
+    ],
+    [
       /<meta\s+property="og:description"\s+content="[^"]*"\s*\/>/,
       `<meta property="og:description" content="${escapeHtml(description)}" />`,
-    )
-    .replace(
+      "og:description",
+    ],
+    [
       /<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/>/,
       `<meta name="twitter:title" content="${escapeHtml(title)}" />`,
-    )
-    .replace(
+      "twitter:title",
+    ],
+    [
       /<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/>/,
       `<meta name="twitter:description" content="${escapeHtml(description)}" />`,
-    );
+      "twitter:description",
+    ],
+  ].reduce((currentHtml, [pattern, replacement, label]) => {
+    return replaceRequired(currentHtml, pattern as RegExp, replacement as string, label as string);
+  }, html);
+
+  assertInjectedHead(injected);
+  return injected;
 }
 
 function outputPathForRoute(routePath: string) {
@@ -113,3 +151,5 @@ writePrerenderedPage({
   description: "The requested Orbital Aquatics page could not be found.",
   canonicalUrl: getCanonicalUrl("/404"),
 });
+
+fs.rmSync(ssrDir, { recursive: true, force: true });

@@ -62,8 +62,18 @@ export const routeMeta: RouteMeta[] = [
   },
 ];
 
+const canonicalPathRedirects: Record<string, string> = {
+  "/overview": "/platform",
+  "/privacy-policy": "/privacy",
+};
+
+export function normalizeCanonicalPath(pathname: string) {
+  const withoutTrailingSlash = pathname === "/" ? "/" : pathname.replace(/\/$/, "");
+  return canonicalPathRedirects[withoutTrailingSlash] ?? withoutTrailingSlash;
+}
+
 export function getRouteMeta(pathname: string) {
-  const normalizedPath = pathname === "/" ? "/" : pathname.replace(/\/$/, "");
+  const normalizedPath = normalizeCanonicalPath(pathname);
   return routeMeta.find((meta) => meta.path === normalizedPath) ?? routeMeta[0];
 }
 
@@ -84,7 +94,7 @@ function setCanonicalUrl(url: string) {
 }
 
 export function getCanonicalUrl(pathname: string) {
-  const normalizedPath = pathname === "/privacy-policy" ? "/privacy" : pathname;
+  const normalizedPath = normalizeCanonicalPath(pathname);
   return `${siteUrl}${normalizedPath === "/" ? "/" : normalizedPath.replace(/\/$/, "")}`;
 }
 
