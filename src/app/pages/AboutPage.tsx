@@ -37,7 +37,7 @@ const principles = [
 export function AboutPage() {
   useEffect(() => {
     setPageMeta(
-      "About | Orbital Aquatics",
+      "About Orbital Aquatics",
       "Meet the Orbital Aquatics founders and learn why they are building simpler software for the people who run pools.",
     );
   }, []);
