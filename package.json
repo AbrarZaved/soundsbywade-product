@@ -4,7 +4,9 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "build": "vite build",
+    "build": "npm run build:client && npm run build:prerender",
+    "build:client": "vite build",
+    "build:prerender": "vite build --ssr src/prerender.tsx --outDir dist-ssr && node dist-ssr/prerender.js && rm -rf dist-ssr",
     "dev": "vite"
   },
   "dependencies": {
