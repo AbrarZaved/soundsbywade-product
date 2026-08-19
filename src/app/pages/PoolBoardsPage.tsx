@@ -29,8 +29,8 @@ const boardWork = [
 export function PoolBoardsPage() {
   useEffect(() => {
     setPageMeta(
-      "Pool Boards | Orbital Aquatics",
-      "Orbital Aquatics gives community pool boards a calmer place for memberships, payments, events, communication, administration, and member experience.",
+      "Pool Board Management Software | Orbital Aquatics",
+      "Orbital Aquatics gives community pool boards a calmer way to manage memberships, payments, events, communication, administration, and member experience.",
     );
   }, []);
 

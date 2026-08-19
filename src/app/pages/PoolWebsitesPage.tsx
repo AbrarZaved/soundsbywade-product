@@ -25,8 +25,8 @@ const websiteMoments = [
 export function PoolWebsitesPage() {
   useEffect(() => {
     setPageMeta(
-      "Pool Websites | Orbital Aquatics",
-      "Orbital Aquatics helps pools give members a clean, mobile-first place for hours, announcements, events, registrations, and membership information.",
+      "Pool Website Software | Orbital Aquatics",
+      "Pool website software that gives members a clean mobile-first place for hours, announcements, events, registrations, documents, and membership information.",
     );
   }, []);
 

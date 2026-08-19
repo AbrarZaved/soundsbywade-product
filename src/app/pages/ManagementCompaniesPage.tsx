@@ -29,8 +29,8 @@ const outcomes = [
 export function ManagementCompaniesPage() {
   useEffect(() => {
     setPageMeta(
-      "Management Companies | Orbital Aquatics",
-      "Orbital Aquatics helps pool management companies see readiness, staff workflows, chemistry, maintenance, incidents, and follow-up across every property.",
+      "Pool Management Company Software | Orbital Aquatics",
+      "Pool management company software for viewing readiness, staff workflows, chemistry, maintenance, incidents, and follow-up across every property.",
     );
   }, []);
 

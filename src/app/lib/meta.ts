@@ -1,6 +1,6 @@
-const defaultTitle = "Orbital Aquatics | Pool Operations Software";
+const defaultTitle = "Orbital Aquatics | Pool Management Software";
 const defaultDescription =
-  "Orbital Aquatics gives pool management companies and community pools one connected platform for operations, administration, and member experience.";
+  "Orbital Aquatics is pool management software that connects operations, administration, and member experience for pool management companies and community pools.";
 export const siteUrl = "https://orbitalaquatics.com";
 
 export type RouteMeta = {
@@ -17,31 +17,31 @@ export const routeMeta: RouteMeta[] = [
   },
   {
     path: "/platform",
-    title: "Platform | Orbital Aquatics",
+    title: "Pool Operations Software Platform | Orbital Aquatics",
     description:
-      "See how Orbital Aquatics connects pool operations, administration, and member experience in one shared system.",
+      "See how Orbital Aquatics helps pool teams connect readiness, staffing, chemistry, maintenance, administration, and member updates in one operations platform.",
   },
   {
     path: "/management-companies",
-    title: "Management Companies | Orbital Aquatics",
+    title: "Pool Management Company Software | Orbital Aquatics",
     description:
-      "Orbital Aquatics helps pool management companies see readiness, staff workflows, chemistry, maintenance, incidents, and follow-up across every property.",
+      "Pool management company software for viewing readiness, staff workflows, chemistry, maintenance, incidents, and follow-up across every property.",
   },
   {
     path: "/pool-boards",
-    title: "Pool Boards | Orbital Aquatics",
+    title: "Pool Board Management Software | Orbital Aquatics",
     description:
-      "Orbital Aquatics gives community pool boards a calmer place for memberships, payments, events, communication, administration, and member experience.",
+      "Orbital Aquatics gives community pool boards a calmer way to manage memberships, payments, events, communication, administration, and member experience.",
   },
   {
     path: "/pool-websites",
-    title: "Pool Websites | Orbital Aquatics",
+    title: "Pool Website Software | Orbital Aquatics",
     description:
-      "Orbital Aquatics helps pools give members a clean, mobile-first place for hours, announcements, events, registrations, and membership information.",
+      "Pool website software that gives members a clean mobile-first place for hours, announcements, events, registrations, documents, and membership information.",
   },
   {
     path: "/about",
-    title: "About | Orbital Aquatics",
+    title: "About Orbital Aquatics",
     description:
       "Meet the Orbital Aquatics founders and learn why they are building simpler software for the people who run pools.",
   },

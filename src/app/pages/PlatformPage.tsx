@@ -24,8 +24,8 @@ const worlds = [
 export function PlatformPage() {
   useEffect(() => {
     setPageMeta(
-      "Platform | Orbital Aquatics",
-      "See how Orbital Aquatics connects pool operations, administration, and member experience in one shared system.",
+      "Pool Operations Software Platform | Orbital Aquatics",
+      "See how Orbital Aquatics helps pool teams connect readiness, staffing, chemistry, maintenance, administration, and member updates in one operations platform.",
     );
   }, []);
 

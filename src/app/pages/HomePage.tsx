@@ -31,8 +31,8 @@ const audiencePaths = [
 export function HomePage() {
   useEffect(() => {
     setPageMeta(
-      "Orbital Aquatics | Pool Operations Software",
-      "Orbital Aquatics gives pool management companies and community pools one connected platform for operations, administration, and member experience.",
+      "Orbital Aquatics | Pool Management Software",
+      "Orbital Aquatics is pool management software that connects operations, administration, and member experience for pool management companies and community pools.",
     );
   }, []);
 
