@@ -21,7 +21,7 @@ RUN printf 'server {\n\
     index index.html;\n\
     \n\
     location /api/ {\n\
-        proxy_pass http://soundsbywade-web-1:8000;\n\
+        proxy_pass http://web:8000;\n\
         proxy_set_header Host $host;\n\
         proxy_set_header X-Real-IP $remote_addr;\n\
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n\
