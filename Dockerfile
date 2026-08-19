@@ -19,8 +19,10 @@ RUN printf 'server {\n\
     listen 80;\n\
     resolver 127.0.0.11 valid=10s ipv6=off;\n\
     resolver_timeout 5s;\n\
+    absolute_redirect off;\n\
     root /usr/share/nginx/html;\n\
     index index.html;\n\
+    error_page 404 /404.html;\n\
     \n\
     location = /overview {\n\
         return 301 /platform;\n\
@@ -40,7 +42,11 @@ RUN printf 'server {\n\
     }\n\
     \n\
     location / {\n\
-    try_files $uri.html $uri $uri/ /404.html;\n\
+        try_files $uri.html $uri $uri/ =404;\n\
+    }\n\
+    \n\
+    location = /404.html {\n\
+        internal;\n\
     }\n\
     \n\
     gzip on;\n\
